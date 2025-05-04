@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
+import config from '../config';
 
 function Home() {
   const [modalType, setModalType] = useState(null);
@@ -19,34 +20,34 @@ function Home() {
       const headers = { "Content-Type": "application/json" };
 
       if (modalType === "addGame") {
-        response = await fetch("https://localhost:5001/api/games", {
+        response = await fetch(`${config.apiUrl}/games`, {
           method: "POST",
           headers,
           body: JSON.stringify(formData),
         });
       } else if (modalType === "removeGame") {
         response = await fetch(
-          `https://localhost:5001/api/games/${formData.name}`,
+          `${config.apiUrl}/games/${formData.name}`,
           {
             method: "DELETE",
           }
         );
       } else if (modalType === "addUser") {
-        response = await fetch("https://localhost:5001/api/users", {
+        response = await fetch(`${config.apiUrl}/users`, {
           method: "POST",
           headers,
           body: JSON.stringify({ name: formData.name }), // Only send name
         });
       } else if (modalType === "removeUser") {
         response = await fetch(
-          `https://localhost:5001/api/users/${formData.name}`,
+          `${config.apiUrl}/users/${formData.name}`,
           {
             method: "DELETE",
           }
         );
       } else if (modalType === "disableRating") {
         response = await fetch(
-          `https://localhost:5001/api/users/${formData.name}/ratingStatus`,
+          `${config.apiUrl}/users/${formData.name}/ratingStatus`,
           {
             method: "PUT",
             headers,
@@ -55,7 +56,7 @@ function Home() {
         );
       } else if (modalType === "enableRating") {
         response = await fetch(
-          `https://localhost:5001/api/users/${formData.name}/ratingStatus`,
+          `${config.apiUrl}/users/${formData.name}/ratingStatus`,
           {
             method: "PUT",
             headers,

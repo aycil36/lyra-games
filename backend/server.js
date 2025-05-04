@@ -1,8 +1,9 @@
 const https = require("https");
-const fs = require("fs");const express = require("express");
+const fs = require("fs");
+const express = require("express");
 const mongoose = require("mongoose");
 //const cors = require("cors");
-require("dotenv").config();
+const config = require("./config");  // Import our config
 const gamesRoute = require('./routes/games');
 const ratingRoutes = require("./routes/rating");
 const userRoutes = require('./routes/users');
@@ -35,8 +36,10 @@ app.use('/api/games', gamesRoute);
 app.use("/api/rate", ratingRoutes);
 
 
+
+
 // MongoDB bağlantısı
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(config.mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -53,13 +56,12 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use("/api/games", gamesRoute);
 // HTTPS sunucusunu başlat
-const PORT = process.env.PORT || 5001;
 const httpsOptions = {
   key: fs.readFileSync("key.pem"), // Özel anahtar dosyası
   cert: fs.readFileSync("cert.pem"), // Sertifika dosyası
 };
 
-https.createServer(httpsOptions, app).listen(PORT, () => {
-  console.log(`Server running on https://localhost:${PORT}`);
+https.createServer(httpsOptions, app).listen(config.port, () => {
+  console.log(`Server running on https://localhost:${config.port}`);
 });
 

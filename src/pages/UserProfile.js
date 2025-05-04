@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/UserProfile.css"; // Stil dosyası varsa
+import config from '../config'; 
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
@@ -13,7 +14,7 @@ function UserProfile() {
       return;
     }
 
-    fetch(`https://localhost:5001/api/users/${username}`)
+    fetch(`${config.apiUrl}/users/${username}`)
       .then((res) => {
         if (!res.ok) throw new Error("Kullanıcı bulunamadı");
         return res.json();

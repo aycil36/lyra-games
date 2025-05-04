@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GameCard from "../components/GameCard";
 import "../styles/GamePage.css";
+import config from '../config'; 
 
 function GamePage() {
   const [games, setGames] = useState([]);
@@ -8,7 +9,7 @@ function GamePage() {
 
   const fetchGames = async () => {
     try {
-      const response = await fetch("https://localhost:5001/api/games");
+      const response = await fetch(`${config.apiUrl}/games`);
       const data = await response.json();
       setGames(data);
     } catch (error) {

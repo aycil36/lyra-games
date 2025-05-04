@@ -22,7 +22,7 @@ function GameDetailPage() {
       return;
     }
 
-    fetch(`https://localhost:5001/api/games/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/games/${id}`)
       .then((response) => {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return response.json();
@@ -36,7 +36,7 @@ function GameDetailPage() {
         setLoading(false);
       });
 
-    fetch(`https://localhost:5001/api/users/${username}`)
+    fetch(`${process.env.REACT_APP_API_URL}/users/${username}`)
       .then((res) => res.json())
       .then((userData) => setCanRate(userData.canRate))
       .catch((err) => console.error("canRate kontrolü başarısız:", err));
@@ -57,7 +57,7 @@ function GameDetailPage() {
     }
   
     try {
-      const response = await fetch(`https://localhost:5001/api/games/${game._id}/interact`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/games/${game._id}/interact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

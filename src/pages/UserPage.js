@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../styles/UserPage.css";
 import backgroundImage from "../assets/sticker4.jpeg";
+import config from '../config'; 
 
 function UserPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://localhost:5001/api/users")
+   fetch(`${config.apiUrl}/users`)
+
+
       .then((res) => {
         if (!res.ok) throw new Error("Kullanıcılar alınamadı.");
         return res.json();

@@ -5,9 +5,26 @@ const User = require('../models/User'); // MongoDB User modeli
 // GET /api/users → Tüm kullanıcıları getir
 router.get('/', async (req, res) => {
   try {
+    console.log('Fetching users from database...');
+    console.log('Collection name:', User.collection.name);
+    console.log('Database name:', User.db.name);
+    
     const users = await User.find();
+    console.log(`Found ${users.length} users:`, users);
+    
+    // Try direct MongoDB connection as a fallback
+    if (users.length === 0) {
+      console.log('Attempting direct collection query...');
+      const directUsers = await User.collection.find({}).toArray();
+      console.log(`Direct query found ${directUsers.length} users`);
+      if (directUsers.length > 0) {
+        return res.json(directUsers);
+      }
+    }
+    
     res.json(users);
   } catch (err) {
+    console.error('Error fetching users:', err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -16,7 +33,7 @@ router.get('/', async (req, res) => {
 router.get('/:username', async (req, res) => {
   const username = req.params.username;
   try {
-    const user = await User.findOne({ name: { $regex: `^${username}$`, $options: "i" } });
+    const user = await User.findOne({ name: username});
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

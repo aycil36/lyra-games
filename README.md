@@ -2,6 +2,37 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Environment Setup
+
+This project uses a single `.env` file for both frontend and backend to manage development and production environments. The environment variables are:
+
+```
+# Environment Configuration
+NODE_ENV=development  # Change to 'production' for production build
+
+# API Configuration
+REACT_APP_API_URL=https://localhost:5001/api  # Development API URL
+REACT_APP_API_URL_PROD=https://lyra-games.onrender.com/api  # Production API URL
+
+# Server Configuration
+PORT=5001  # Development port
+PORT_PROD=5001  # Production port
+
+# MongoDB Configuration
+MONGO_URI=mongodb://localhost:27017/bludyclud  # Development MongoDB URI
+MONGO_URI_PROD=mongodb://your-production-mongodb-uri/bludyclud  # Production MongoDB URI
+
+# Set this to true to use production values regardless of NODE_ENV
+FORCE_PRODUCTION=false
+REACT_APP_FORCE_PRODUCTION=false
+```
+
+To switch between development and production environments, you can either:
+1. Change `NODE_ENV` to 'production'
+2. Set `FORCE_PRODUCTION=true` and `REACT_APP_FORCE_PRODUCTION=true`
+
+Note: The backend directory uses a symbolic link to the root .env file, so there's only one file to maintain.
+
 ## Available Scripts
 
 In the project directory, you can run:
